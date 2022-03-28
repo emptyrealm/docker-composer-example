@@ -1,0 +1,26 @@
+version: '2'
+services:
+  php-fpm:
+    build: "."
+    restart: always
+    expose:
+      - "9000"
+    volumes:
+      - .:/var/www/html/
+
+  nginx:
+    image: nginx:alpine
+    restart: always
+    depends_on:
+      - php-fpm
+    environment:
+      - TZ:Asia/Shanghai
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html/
+      - ./deployment/nginx/conf.d:/etc/nginx/conf.d/:ro
+      - log-data:/var/log/nginx/:rw
+
+volumes:
+  log-data:
