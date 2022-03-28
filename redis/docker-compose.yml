@@ -1,0 +1,9 @@
+version: '2'
+services:
+  redis:
+    restart: always
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --port 6379 --requirepass 123456  --appendonly yes
